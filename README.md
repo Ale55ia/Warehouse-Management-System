@@ -61,6 +61,16 @@ warehouse_management_system/
 │
 ├── enums/
 │   └── movement_type.py
+│ 
+├── gui/
+│  └── windows/
+│     ├── all_products_window.py
+│     ├── expiring_products_window
+│     ├── home_window.py
+│     ├── movements_history_window.py
+│     ├── new_product_window.py
+│     ├── sale_window.py
+│     └── search_results_window.py
 │
 ├── services/
 │   ├── product_service.py
@@ -192,12 +202,6 @@ ACCESS_CODE_HASH=your-password-hash
 DATABASE_URL=your-database-url
 ```
 
-Create the database tables if necessary:
-
-```bash
-python create_tables.py
-```
-
 Start the web application:
 
 ```bash
@@ -218,7 +222,7 @@ The desktop application can be started through:
 python main.py
 ```
 
-This interface was the initial version of the project and is kept separately from the Flask web application.
+This interface was the initial and basic version of the project and is kept separately from the Flask web application.
 
 ---
 
@@ -227,15 +231,6 @@ This interface was the initial version of the project and is kept separately fro
 The project is currently being developed as a **local web application**, intended to run on the computer used in the supermarket warehouse.
 
 The current setup is designed to keep the application and PostgreSQL database locally on the warehouse computer, without requiring an external server.
-
-Future improvements may include:
-
-* Easier application startup
-* Automated database backups
-* Improved barcode management
-* Multi-device access
-* Online deployment
-* Additional inventory management features
 
 ---
 
