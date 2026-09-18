@@ -1,7 +1,13 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-engine = create_engine("postgresql+psycopg://localhost/warehouse")
+load_dotenv()
+
+DATABASE_URL = os.environ["DATABASE_URL"]
+engine = create_engine(DATABASE_URL)
 
 
 class Base(DeclarativeBase):

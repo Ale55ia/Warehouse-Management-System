@@ -1,4 +1,5 @@
 import os
+import secrets
 from datetime import date, datetime
 
 from dotenv import load_dotenv
@@ -32,6 +33,8 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 ACCESS_CODE_HASH = os.environ["ACCESS_CODE_HASH"]
 
+APP_SESSION_ID = secrets.token_hex(16)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -43,6 +46,7 @@ def login():
         if check_password_hash(ACCESS_CODE_HASH, code):
 
             session["logged_in"] = True
+            session["app_session_id"] = APP_SESSION_ID
 
             return redirect(url_for("home"))
 
@@ -57,7 +61,7 @@ def require_login():
     if request.endpoint in ["login", "static"]:
         return
 
-    if not session.get("logged_in"):
+    if not session.get("logged_in" or session.get("app_session_id") != APP_SESSION_ID):
         return redirect(url_for("login"))
 
 
