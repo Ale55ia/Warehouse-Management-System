@@ -63,14 +63,14 @@ warehouse_management_system/
 │   └── movement_type.py
 │ 
 ├── gui/
-│  └── windows/
-│     ├── all_products_window.py
-│     ├── expiring_products_window
-│     ├── home_window.py
-│     ├── movements_history_window.py
-│     ├── new_product_window.py
-│     ├── sale_window.py
-│     └── search_results_window.py
+│   └── windows/
+│       ├── all_products_window.py
+│       ├── expiring_products_window
+│       ├── home_window.py
+│       ├── movements_history_window.py
+│       ├── new_product_window.py
+│       ├── sale_window.py
+│       └── search_results_window.py
 │
 ├── services/
 │   ├── product_service.py
