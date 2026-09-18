@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storico movimenti</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <a href="/">← Torna alla home</a>
+
+        <h1>Storico movimenti</h1>
+
+        <div class"movement-list">
+
+            {% for movement in movements %}
+
+                <div class="movement-card">
+
+                    <h2>{{ movement.batch.product.name }}</h2>
+
+                    <p>
+                        <strong>Data:</strong>
+                        {{ movement.movement_date.strftime("%d/%m/%Y") }}
+                    </p>
+
+                    <p>
+                        <strong>Tipo di movimento:</strong>
+                        {{ movement.movement_type.value }}
+                    </p>
+
+                    <p>
+                        <strong>Quantità:</strong>
+                        {{ movement.quantity | abs }}
+                    </p>
+
+                    <p>
+                        <strong>Lotto:</strong>
+                        {{ movement.batch.lot_number or "-"}}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+            
+        </div>
+
+    </main>
+
+</body>

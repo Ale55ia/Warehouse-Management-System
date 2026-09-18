@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prelievo</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <a href="/">← Torna alla home</a>
+
+        <h1>Prelievo</h1>
+
+        <form action="{{ url_for('search') }}" method="get" class="search-box">
+            <input
+                type="text"
+                name="q"
+                placeholder="Cerca prodotto..."
+                list="product-suggestions"
+            >
+            <datalist id="product-suggestions">
+                {% for product in products %}
+                    <option value="{{product.name}}">
+                {% endfor %}
+            </datalist>
+            <button type="submit">🔍</button>
+        </form>
+
+        <div class="warehouse-list">
+
+            {% for product in products %}
+
+                <div class="product-card">
+
+                    <h2>{{ product.name }}</h2>
+
+                    {% for batch in product.batches %}
+
+                        <form 
+                            action="{{ url_for('create_withdrawal') }}"
+                            method="post"
+                            class="withdrawal-form"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="batch_id"
+                                value="{{ batch.id }}"
+                            >
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                min="1"
+                                max="{{ batch.quantity }}"
+                                placeholder="Quantità"
+                                required
+                            >
+
+                            <button type="submit">
+                                Preleva
+                            </button>
+
+                        </form>
+
+                        <div class="batch">
+
+                            <p>
+                                <strong>Quantità:</strong>
+                                {{ batch.quantity }}
+                            </p>
+
+                            <p>
+                                <strong>Scadenza:</strong>
+                                {{ batch.expiration_date.strftime("%d/%m/%Y") or "-" }}
+                            </p>
+
+                            <p>
+                                <strong>Lotto:</strong>
+                                {{ batch.lot_number or "-" }}
+                            </p>
+
+                            <p>
+                                <strong>Posizione:</strong>
+                                {{ batch.location or "-" }}
+                            </p>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+    
+    </main>
+
+</body>

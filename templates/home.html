@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial_scale=1.0">
+    <title>Gestione Magazzino</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <h1>Gestione Magazzino</h1>
+
+        <a href="{{ url_for('logout') }}" class="logout-button">
+            Esci
+        </a>
+
+        <p class="subtitle">
+            Benvenuto nel gestionale del magazzino.
+        </p>
+
+        <div class="menu-grid">
+
+            <a href="{{ url_for('warehouse') }}" class="menu-button">
+                <span class="icon">📦</span>
+                <span>Magazzino</span>
+            </a>
+
+            <a href="{{ url_for('new_arrival') }}" class="menu-button">
+                <span class="icon">➕</span>
+                <span>Nuovi arrivi</span>
+            </a>
+
+            <a href="{{ url_for('withdrawal') }}" class="menu-button">
+                <span class="icon">📤</span>
+                <span>Prelievo</span>
+            </a>
+
+            <a href="{{ url_for('expired_products') }}" class="menu-button">
+                <span class="icon">⚠️</span>
+                <span>Scadenze</span>
+            </a>
+
+            <a href="{{ url_for('movement_history') }}" class="menu-button">
+                <span class="icon">📋</span>
+                <span>Storico movimenti</span>
+            </a>
+
+        </div>
+    
+    </main>
+
+</body>
+
+</html>

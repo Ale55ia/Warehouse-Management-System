@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuovi arrivi</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <a href="/">← Torna alla home</a>
+
+        <h1>Nuovi arrivi</h1>
+
+        <form 
+            action="{{ url_for('new_arrival') }}"
+            method="post"
+            class="product-form"
+        >
+            <label for="name">Nome prodotto</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Es. Birra peroni 66cl"
+                required
+            >
+
+            <label for="barcode">Barcode</label>
+
+            <div class="barcode-input">
+                <input
+                    type="text"
+                    id="barcode"
+                    name="barcode"
+                    placeholder="Codice a barre"
+                >
+
+                <button type="button" id="scan-barcode">
+                    📷
+                </button>
+            </div>
+
+            <div id="scanner" style="display: none;"></div>
+
+            <label for"category">Categoria</label>
+            <select id="category" name="category">
+                <option value=""> Seleziona una categoria</option>
+                <option value="Dolci">Dolci</option>
+                <option value="Bevande">Bevande</option>
+                <option value="Latticini">Latticini</option>
+                <option value="Pasta">Pasta</option>
+                <option value="Altro">Altro</option>
+            </select>
+
+            <label for="quantity">Quantità</label>
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                min="1"
+                required
+            >
+
+            <label for="expiration_date">Scadenza</label>
+            <input
+                type="text"
+                id="expiration_date"
+                name="expiration_date"
+                placeholder="GG/MM/AAAA"
+            >
+
+            <label for="lot_number">Lotto</label>
+            <input
+                type="text"
+                id="lot_number"
+                name="lot_number"
+                placeholder="Lotto (facoltativo)"
+            >
+
+            <label for="location">Posizione</label>
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Es. Magazzino pasta (facoltativo)"
+            >
+
+            <button type="submit">
+                Aggiungi arrivo
+            </button>
+        
+        </form>
+
+    </main>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+</body>
+
+</html>
+
+<script>
+
+    const scanButton = document.getElementById("scan-barcode");
+    const scanner = document.getElementById("scanner");
+    const barcodeInput = document.getElementById("barcode");
+
+    let html5QrCode;
+
+    scanButton.addEventListener("click", async () => {
+
+        scanner.style.display = "block";
+
+        html5QrCode = new Html5Qrcode("scanner");
+
+        await html5QrCode.start(
+            { facingMode: "environment" },
+
+            {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 100
+                }
+            },
+
+            (decodedText) => {
+
+                barcodeInput.value = decodedText;
+
+                html5QrCode.stop();
+
+                scanner.style.display = "none";
+
+
+                // Controlliamo se il barcode esiste già
+                fetch(`/barcode/${decodedText}`)
+                    .then(response => response.json())
+                    .then(data => {
+
+                        if (data.found) {
+
+                            document.getElementById("name").value = data.name;
+
+                            document.getElementById("category").value = data.category;
+
+                        }
+
+                    });
+
+            },
+
+            () => {
+                // Il codice non è ancora stato letto.
+            }
+        );
+    });
+
+</script>

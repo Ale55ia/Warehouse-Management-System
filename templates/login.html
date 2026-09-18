@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Accesso - Gestione Magazzino</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+```
+
+</head>
+
+<body>
+
+```
+<main class="login-container">
+
+    <div class="login-box">
+
+        <h1>Gestione Magazzino</h1>
+
+        <p class="login-subtitle">
+            Inserisci il codice per accedere
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="password"
+                id="code"
+                name="code"
+                placeholder="Codice di accesso"
+                required
+                autofocus
+            >
+
+            <button type="submit">
+                Accedi
+            </button>
+
+        </form>
+
+        {% if error %}
+            <p class="login-error">{{ error }}</p>
+        {% endif %}
+
+    </div>
+
+</main>
+```
+
+</body>
+
+</html>

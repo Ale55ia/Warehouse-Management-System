@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodotti scaduti</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <a href="/">← Torna alla home</a>
+
+        <h1>🔴 Prodotti scaduti</h1>
+
+        <div class="expired-products">
+
+            {% for batch in expired if batch.quantity > 0 %}
+
+                <div class="expired-card">
+
+                    <form
+                        action="{{ url_for('delete_expired') }}"
+                        method="post"
+                        class="delete-form"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="batch_id"
+                            value="{{ batch.id }}"
+                        >
+
+                        <button type="submit">
+                            Elimina prodotto
+                        </button>
+                        
+                    </form>
+
+                    <h2> {{ batch.product.name }}</h2>
+
+                    <p>
+                        <strong>Quantità:</strong>
+                        {{ batch.quantity }}
+                    </p>
+
+                    <p>
+                        <strong>Scadenza:</strong>
+                        {{ batch.expiration_date.strftime("%d/%m/%Y") or "-"}}
+                    </p>
+
+                    <p>
+                        <strong>Lotto:</strong>
+                        {{ batch.lot_number or "-"}}
+                    </p>
+
+                    <p>
+                        <strong>Posizione:</strong>
+                        {{ batch.location or "-" }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+    <main class="container">
+
+        <h1>🟠 Prodotti in scadenza</h1>
+
+        <div class="expiring-products">
+
+            {% for batch in expiring if batch.quantity > 0 %}
+
+                <div class="expiring-card">
+
+                    <h2> {{ batch.product.name }}</h2>
+
+                    <p>
+                        <strong>Quantità:</strong>
+                        {{ batch.quantity }}
+                    </p>
+
+                    <p>
+                        <strong>Scadenza:</strong>
+                        {{ batch.expiration_date.strftime("%d/%m/%Y") or "-"}}
+                    </p>
+
+                    <p>
+                        <strong>Lotto:</strong>
+                        {{ batch.lot_number or "-"}}
+                    </p>
+
+                    <p>
+                        <strong>Posizione:</strong>
+                        {{ batch.location or "-" }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
