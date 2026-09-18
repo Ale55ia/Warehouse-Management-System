@@ -3,4 +3,3 @@ pyside6
 Flask
 sqlalchemy
 psycopg
-ruff
