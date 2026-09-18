@@ -3,3 +3,4 @@ pyside6
 Flask
 sqlalchemy
 psycopg
+dotenv
